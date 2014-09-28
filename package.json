@@ -1,5 +1,5 @@
 {
-  "name": "Facebook Photo Finder",
+  "name": "fb_top_photos",
   "version": "0.0.1",
   "description": "A Facebook Photo Finder",
   "main": "app.js",
@@ -21,7 +21,6 @@
   "homepage": "https://github.com/louisnk/fb_top_photos",
   "dependencies": {
     "express": "3.5.0",
-    "serve-favicon": "*",
     "hjs": "*",
     "less-middleware": "*"
   }

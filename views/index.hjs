@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ title }}</title>
+    <title>fb photo finder</title>
    
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/javascripts/libs/jquery-min.1.11.1.js"></script>
-    <script src="/javascripts/libs/underscore-1.6.0.js"></script>
-    <script src="/javascripts/libs/backbone-1.1.2.js"></script>
-    <script src="/javascripts/main.js"></script>
-    <script src="/javascripts/views/nav-sidebar.js"></script>
-    <script src="/javascripts/views/main-content.js"></script>
-    <script src="/javascripts/views/main-header.js"></script>
-    <script src="/javascripts/views/main-footer.js"></script>
+
 
     <script id="mobile-sidebar-template-1" type="text/template">
       <div class="nav vertical">
@@ -24,6 +17,11 @@
        
       </div>      
     </script>
+
+    <script id="footer-login-template" type="text/template">
+
+    </script>
+
 
   </head>
 
@@ -39,12 +37,34 @@
           <div class="nav-toggle">
             <div class="icon icon-menu"></div>
           </div>
-          <h1>{{ title }}</h1>
+          <h1>fb photo finder</h1>
         </div>
         <div id="mobile-footer" class="">
+          <div
+            class="fb-like"
+            data-share="true"
+            data-width="450"
+            data-show-faces="true">
+          </div>
+          <button class='fb-login'>Login</button>
         </div>
       </div>
 
     </div>
+
+
+
+    <script src="/javascripts/libs/jquery-min.1.11.1.js"></script>
+    <script src="/javascripts/libs/underscore-1.6.0.js"></script>
+    <script src="/javascripts/libs/backbone-1.1.2.js"></script>
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/routers/router.js"></script>
+    <script src="/javascripts/views/nav-sidebar.js"></script>
+    <script src="/javascripts/views/main-content.js"></script>
+    <script src="/javascripts/views/main-header.js"></script>
+    <script src="/javascripts/views/main-footer.js"></script>
+    <script src="/javascripts/views/home-content.js"></script>
+    <script src="/javascripts/views/main-images.js"></script>
+    <script src="/javascripts/views/single-image.js"></script>
   </body>
 </html>
