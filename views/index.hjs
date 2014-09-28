@@ -2,9 +2,7 @@
 <html>
   <head>
     <title>fb photo finder</title>
-   
     <link rel='stylesheet' href='/stylesheets/style.css' />
-
 
     <script id="mobile-sidebar-template-1" type="text/template">
       <div class="nav vertical">
@@ -40,13 +38,10 @@
           <h1>fb photo finder</h1>
         </div>
         <div id="mobile-footer" class="">
-          <div
-            class="fb-like"
-            data-share="true"
-            data-width="450"
-            data-show-faces="true">
-          </div>
-          <button class='fb-login'>Login</button>
+          <div id="status"></div>
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+          </fb:login-button>
+          <button class='fb-login'>Logout</button>
         </div>
       </div>
 
@@ -59,6 +54,8 @@
     <script src="/javascripts/libs/backbone-1.1.2.js"></script>
     <script src="/javascripts/main.js"></script>
     <script src="/javascripts/routers/router.js"></script>
+    <script src="/javascripts/views/facebook.js"></script>
+    <script src="/javascripts/models/user.js"></script>
     <script src="/javascripts/views/nav-sidebar.js"></script>
     <script src="/javascripts/views/main-content.js"></script>
     <script src="/javascripts/views/main-header.js"></script>

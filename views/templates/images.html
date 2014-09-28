@@ -1,0 +1,12 @@
+<div class="container" id="img-scroll">
+	<h3>Images for the taking</h3>
+	<ul>
+		{{#images}}
+			<li>
+        <a href="/photos/{{set}}/{{id}}">
+          <img src="{{src}}" alt="{{description}}">
+        </a>
+      </li>
+		{{/images}}
+	</ul>
+</div>

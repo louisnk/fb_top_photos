@@ -3,12 +3,10 @@ var APP = window.APP || {};
 (function(APP) {
   APP = _.extend(APP, {
 
-    fbID: 280198648674835,
-
     navState: new Backbone.Model({
       navOpen: false,
-      navPosition: 'left',
       navType: 'link', // link, toggle, radio
+      navPosition: 'left',
       footerAvailable: true,
       footerTakeover: true,
       mainBg: 'url(/images/waterbg.jpg)'
@@ -22,13 +20,24 @@ var APP = window.APP || {};
       imageSetToShow: false
     }),
 
+    userState: new Backbone.Model({
+      set: false,
+      loggedIn: false,
+      infoPulled: false,
+      photosPulled: false,
+      albumsSelected: false
+    }),
+
     init: function() {
       var Views = this.Views,
           viewConfig = function(selector) {
             return { el: selector, model: this.navState };
           }.bind(this),
           pageConfig = function(selector) {
-            return { el : selector, model: this.pageState };
+            return { el: selector, model: this.pageState };
+          }.bind(this),
+          userConfig = function(selector) {
+            return { el: selector, model: this.userState };
           }.bind(this);
 
       this.activeViews = {
@@ -40,6 +49,7 @@ var APP = window.APP || {};
 
       this.availableViews = {
         // home: new Views.WelcomeContent(pageConfig('#home-content')),
+        facebook: new Views.Facebook(userConfig('#image-scroller')),
         images: new Views.MainImageView(pageConfig('#image-scroller')),
         singleImage: new Views.SingleImage(pageConfig('#image-scroller'))
       };
@@ -48,7 +58,7 @@ var APP = window.APP || {};
       // Backbone.history = Backbone.history || new Backbone.history(); 
       Backbone.history.start({pushState: true});
 
-      this.bindNavAction().stopLocalLinks().checkEntryPoint().connectToFB();
+      this.bindNavAction().stopLocalLinks().checkEntryPoint();
       
       // this.navState.set('footerAvailable', false);
     },
@@ -77,54 +87,6 @@ var APP = window.APP || {};
       if (window.location.pathname !== '/') {
         this.mainRouter.navigate(window.location.pathname, { trigger: true });
       }
-
-      return this;
-    },
-
-    initFB: function() {
-      window.fbAsyncInit = function() {
-         FB.init({
-           appId      : '571044009690564',
-           xfbml      : true,
-           version    : 'v2.1'
-         });
-       };
-
-       (function(d, s, id){
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) {return;}
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    },
-
-    connectToFB: function() {
-
-      window.fbAsyncInit = function() {
-         FB.init({
-           appId      : '571044009690564',
-           xfbml      : true,
-           version    : 'v2.1'
-         });
-       };
-
-       (function(d, s, id){
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) {return;}
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-      // $.ajaxSetup({ cache: true });
-      
-      // $.getScript('//connect.facebook.net/en_UK/all.js', function() {
-      //   FB.init({
-      //     appId: this.fbID
-      //   });
-      //   console.log(FB);
-      // }.bind(this));
 
       return this;
     }

@@ -1,7 +1,6 @@
-@navBG: #2b6d99;
+@navBG: #555;
 @navText: #76aacc;
 @navTextActive: #adfff3;
-@transWhite: rgba(255, 255, 255, 0.66);
 
 @font-face {
   font-family: 'icomoon';
@@ -36,6 +35,7 @@ html {
 
 body {
   overflow: hidden;
+  background: #fff;
 }
 
 .shown {
@@ -73,9 +73,9 @@ body {
 
 #mobile-under {
   padding: 10em 15%;
-  background-image: url('/images/mountains.jpg');
   background-size: cover;
-  // background-position: 0 center;
+  // background-image: url(/images/waterbg.jpg);
+  // background-position: 0 cover;
 }
 
 #mobile-header {
@@ -83,7 +83,8 @@ body {
   top: 0;
   height: 80px;
   width: 100%;
-  color: #cbb;
+  background-color: @navBG;
+  color: #f00;
 
   h1 {
     vertical-align: top;
@@ -117,7 +118,7 @@ body {
   top: 100%;
   height: 100%;
   width: 100%;
-  background-color: @transWhite;
+  background-color: @navBG;
 }
 
 .nav {
