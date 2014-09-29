@@ -2,8 +2,7 @@ var APP = window.APP || {};
 
 (function() {
 	APP.Views = APP.Views || {};
-
-	APP.Views.MainImageView = Backbone.View.extend({
+	APP.Views.MainImages = Backbone.View.extend({
 		
 		url: '/getImages',
 
@@ -34,9 +33,17 @@ var APP = window.APP || {};
 			this.model.on('change:imagesLoaded', function(model, loaded) {
 				if (loaded) { this.renderTemplate().showPictures(); }
 				else this.hidePictures();
-			}.bind(this));		
-			
+			}.bind(this));
+
 			return this;
+		},
+
+		orderPhotos: function(photos) {
+			console.log(photos);
+			console.log(APP.user.get('photos'));
+			// photos = photos.order(function(a,b) {
+
+			// })
 		},
 
 		fetchPictures: function(whichSet) {
@@ -68,6 +75,6 @@ var APP = window.APP || {};
 
 			return this;
 		}
-		
+
 	})
 })();

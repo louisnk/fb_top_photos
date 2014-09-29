@@ -25,8 +25,20 @@ var APP = window.APP || {};
         if (pulled) { this.setUser(); }
       }.bind(this));
 
-      this.model.on('change:set', function(model, set) {
-        if (set) { console.log('info set'); }
+
+      this.$el.on('click touchStart', 'i', function(e) {
+        e.stopPropagation();
+
+        if (!this.model.get('loggedIn')) {
+
+          this.tryLogin(function(response) {
+            if (response.status === 'connected') {
+              this.handleLogin();              
+            } else {
+              // they must not want to be logged in?
+            }
+          }.bind(this));;
+        }
       }.bind(this));
 
       return this;
@@ -44,9 +56,10 @@ var APP = window.APP || {};
 
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '571044009690564',
           xfbml      : true,
-          version    : 'v2.1'
+          cookie     : false,
+          version    : 'v2.1',
+          appId      : '571044009690564'
         });
 
         return callback();       
@@ -57,22 +70,16 @@ var APP = window.APP || {};
 
       this.checkLogin(function(loggedIn) {
         if (loggedIn) {
+          
+          APP.navState.set('footerTakeover', false);
 
           this.login = loggedIn;
           this.model.set('loggedIn', true);
 
         } else {
-          
-          this.askForLogin(function(loggedIn) { 
-            if (loggedIn.status === 'connected') { 
-              this.login = loggedIn;
-              this.model.set('loggedIn', true);
-            }
-          }.bind(this));
-
+          this.askForLogin();
         }
       }.bind(this));
-
     },
 
     checkLogin: function(callback) {
@@ -94,12 +101,18 @@ var APP = window.APP || {};
     },
 
     askForLogin: function(callback) {
+      APP.navState.set('footerTakeover', true);
+      $('.icon-facebook').addClass('active');
 
+      return this;
+    },
+
+    tryLogin: function(callback) {
       if (FB) {
-
         FB.login(function(response) {
-          console.log(response);
-          if (response.status === 'connected') { return callback(response); }
+          if (response.status === 'connected') { 
+            return callback(response);
+          }
           else { 
             return callback(false);
           }
@@ -109,12 +122,12 @@ var APP = window.APP || {};
 
     getUser: function() {
 
-      FB.api('/me', function(data) { 
-        if (data.id) {
-          data.auth = this.login.authResponse.accessToken;
+      FB.api('/me', function(response) { 
+        if (response.id && !response.error) {
+          response.auth = this.login.authResponse.accessToken;
         } 
 
-        this.userData = data;
+        this.userData = response;
         this.model.set('infoPulled', true);
 
       }.bind(this)); 
@@ -122,24 +135,18 @@ var APP = window.APP || {};
     },
 
     setUser: function() {
-      console.log(this.userData);
+      var user = new APP.User(this.userData);
 
-      APP.user = new APP.User(this.userData);
-      if (APP.user) { this.model.set('set', true); } 
-      else { this.model.set('set', false); }
+      APP.user = APP.user || new APP.Users(user);
 
-      console.log(APP.user);
+      delete this.userData;
+
+      if (APP.user) { this.model.set('created', true); } 
+      else { this.model.set('created', false); }
 
       return this;
 
-    },
-
-    getAlbums: function() {
-      // TODO
-      if (FB) {
-
-      }
-    },
+    }
 
 
   });

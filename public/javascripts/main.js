@@ -7,21 +7,13 @@ var APP = window.APP || {};
       navOpen: false,
       navType: 'link', // link, toggle, radio
       navPosition: 'left',
-      footerAvailable: true,
       footerTakeover: true,
-      mainBg: 'url(/images/waterbg.jpg)'
+      footerAvailable: true
     }),
 
-    pageState: new Backbone.Model({
-      homeView: true,
-      imagesOpen: false,
-      imageToShow: '000',
-      imagesLoaded: false,
-      imageSetToShow: false
-    }),
-
-    userState: new Backbone.Model({
-      set: false,
+    fbState: new Backbone.Model({
+      photos: false,
+      created: false,
       loggedIn: false,
       infoPulled: false,
       photosPulled: false,
@@ -33,32 +25,23 @@ var APP = window.APP || {};
           viewConfig = function(selector) {
             return { el: selector, model: this.navState };
           }.bind(this),
-          pageConfig = function(selector) {
-            return { el: selector, model: this.pageState };
-          }.bind(this),
-          userConfig = function(selector) {
-            return { el: selector, model: this.userState };
+          fbConfig = function(selector) {
+            return { el: selector, model: this.fbState };
           }.bind(this);
 
+
+
       this.activeViews = {
+        facebook: new Views.Facebook(fbConfig('#fb-loading')),
         nav: new Views.NavSidebar(viewConfig('#nav-container')),
-        mainContent: new Views.MainContent(viewConfig('#main-content')),
+        mainImages: new Views.MainImages(viewConfig('#main-images')),
+        mainFooter: new Views.MainFooter(viewConfig('#mobile-footer')),
         mainHeader: new Views.MainHeader(viewConfig('#mobile-header')),
-        mainFooter: new Views.MainFooter(viewConfig('#mobile-footer'))
+        mainContent: new Views.MainContent(viewConfig('#main-content'))
       };
 
-      this.availableViews = {
-        // home: new Views.WelcomeContent(pageConfig('#home-content')),
-        facebook: new Views.Facebook(userConfig('#image-scroller')),
-        images: new Views.MainImageView(pageConfig('#image-scroller')),
-        singleImage: new Views.SingleImage(pageConfig('#image-scroller'))
-      };
 
-      this.mainRouter = new APP.Routers.Main({model: this.pageState});
-      // Backbone.history = Backbone.history || new Backbone.history(); 
-      Backbone.history.start({pushState: true});
-
-      this.bindNavAction().stopLocalLinks().checkEntryPoint();
+     this.bindNavAction().stopLocalLinks();
       
       // this.navState.set('footerAvailable', false);
     },
@@ -66,6 +49,7 @@ var APP = window.APP || {};
     bindNavAction: function() {
       $('.nav-toggle').bind('click touchstart', function(e) {
         e.stopPropagation();
+
         this.navState.set('navOpen', !this.navState.get('navOpen'));
       }.bind(this));
       return this;
@@ -81,16 +65,8 @@ var APP = window.APP || {};
          });
       }.bind(this));
       return this;
-    },
-
-    checkEntryPoint: function() {
-      if (window.location.pathname !== '/') {
-        this.mainRouter.navigate(window.location.pathname, { trigger: true });
-      }
-
-      return this;
     }
-    
+
 
   });
 
