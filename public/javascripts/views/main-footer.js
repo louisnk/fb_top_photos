@@ -5,8 +5,7 @@ var APP = window.APP || {};
 
   APP.Views.MainFooter = Backbone.View.extend({
     events: {
-      'click'       : 'toggleTakeover',
-      'touchstart'  : 'toggleTakeover'
+      'click'       : 'toggleTakeover'
     },
 
     initialize: function(config) {
@@ -61,12 +60,14 @@ var APP = window.APP || {};
     },
 
     takeOverScreen: function() {
-      this.$el.animate({ 'top': '80px' });
+      var top = (window.innerWidth > 990) ? '5.7em' : '8em';
+      this.$el.animate({ 'top': top });
       return this;
     },
 
     surrenderScreen: function() {
-      this.$el.animate({ 'top':  '90%' });
+      var top = (window.innerWidth > 990) ? '90%' : '93%';
+      this.$el.animate({ 'top':  top });
       return this;
     },
 

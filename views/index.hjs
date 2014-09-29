@@ -41,7 +41,7 @@
           <div class="logout">
             <div class="icon icon-eye-blocked"></div>
           </div>
-          <h1 class='pull-right logout'>log out</h1>
+          <h1 class='pull-right'>log out</h1>
         </div>
 
         <div class="container" id="main-images">
@@ -74,7 +74,7 @@
           <i class="{{ fb.start }} start"></i>
           <div id="fb-loading" class='container text-center'>
             {{#fb.flows}}
-              <div class="col-sm-4 flow">
+              <div class="col-md-4 col-sm-6 flow">
                 <h2> {{ text }} </h2>
                 <br />
                 <div class="icon {{ icon }}"></div>
