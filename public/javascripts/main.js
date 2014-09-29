@@ -37,7 +37,6 @@ var APP = window.APP || {};
         nav: new Views.NavSidebar(viewConfig('#nav-container')),
         mainImages: new Views.MainImages(fbConfig('#main-images')),
         mainFooter: new Views.MainFooter(viewConfig('#mobile-footer')),
-        mainHeader: new Views.MainHeader(viewConfig('#mobile-header')),
         mainContent: new Views.MainContent(viewConfig('#main-content'))
       };
 

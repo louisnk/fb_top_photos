@@ -31,25 +31,20 @@ var APP = window.APP || {};
         } 
       }.bind(this));
 
-      this.model.on('change:photos', function(model, inUse) {
-        if (inUse.length > 0) { APP.fbState.set('photos', inUse); }
-        else console.log(inUse);
-
-      }.bind(this));
-
     },
 
     getPhotos: function() {
       if (FB) {
         FB.api('/' + this.model.get('id') + '/photos/uploaded', function(photos) {
           if (photos.data.length > 0) {
-            this.model.set('photos', photos.data);            
+            console.log('got photos');
+            this.model.set('photos', photos.data);
+            APP.fbState.set('photos', photos.data);            
           } else {
 
             // TODO: tell them they have no photos
           }
         }.bind(this));
-        // this.model.set('photos', [ { likes: [1,2] }, {likes: [2,3,4] }, { likes: [1] } ])
       }
     }
 

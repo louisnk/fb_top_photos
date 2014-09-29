@@ -71,8 +71,6 @@ var APP = window.APP || {};
       this.checkLogin(function(loggedIn) {
         if (loggedIn) {
           
-          APP.navState.set('footerTakeover', false);
-
           this.login = loggedIn;
           this.model.set('loggedIn', true);
 

@@ -35,21 +35,22 @@ var APP = window.APP || {};
 
     checkState: function(model) {
       var stages = {
-        'loggedIn': 'facebook',
+        'photos': 'user',
+        'rendered': 'user',
         'infoPulled': 'wand',
-        'structured': 'wand',
-        'rendered': 'user'
+        'loggedIn': 'facebook'
       }
 
       _.each(model.changed, function(colored, stage) {
         var active = stages[stage];
-        console.log(active);
-        console.log(colored);
-        console.log(stage);
 
         if (colored) { $('.icon-' + active).addClass('active'); }
         else { $('.icon-' + active).removeClass('active'); }
-      });
+
+        if (stage === 'rendered') {
+          setTimeout(function() { this.toggleTakeover(); }.bind(this), 1000);
+        }
+      }.bind(this));
 
       return this;
     },

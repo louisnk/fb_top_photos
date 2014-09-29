@@ -67,7 +67,7 @@
         </div>
 
         <div id="mobile-footer" class="shown">
-          <i class="{{ fb.start }}"></i>
+          <i class="{{ fb.start }} start"></i>
           <div id="fb-loading" class='container text-center'>
             {{#fb.flows}}
               <div class="col-sm-4 flow">
@@ -92,11 +92,8 @@
     <script src="/javascripts/models/user.js"></script>
     <script src="/javascripts/views/nav-sidebar.js"></script>
     <script src="/javascripts/views/main-content.js"></script>
-    <script src="/javascripts/views/main-header.js"></script>
     <script src="/javascripts/views/main-footer.js"></script>
-    <script src="/javascripts/views/home-content.js"></script>
     <script src="/javascripts/views/main-images.js"></script>
-    <script src="/javascripts/views/single-image.js"></script>
     <script src="/javascripts/main.js"></script>
     <script src="/templates.js"></script>
   </body>

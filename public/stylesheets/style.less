@@ -1,5 +1,5 @@
 @navBG: #45619D;
-@footerBG: #9D8245;
+@footerBG: #988E78;
 @navText: #eee;
 @navTextActive: #C29C21;
 
@@ -20,6 +20,10 @@ a:hover,
 a:active,
 a:visited {
   text-decoration: none;
+}
+
+i {
+  cursor: pointer;
 }
 
 .shown {
@@ -183,12 +187,13 @@ a:visited {
 
     img {
       display: block;
-      margin: 10px auto;
+      margin: 0 auto;
       z-index: 0;
+      max-height: 500px;
     }
    
     .minis {
-      a,img {
+      img {
         max-width: 90%;
         border-radius: 2px;
       }
@@ -227,7 +232,11 @@ a:visited {
       font-size: 3em;
       display: block;
       margin: 10px auto;
-      transition: all 1000ms ease-in-out;
+      transition: all 800ms ease-in-out;
+
+      .start {
+        color: #;
+      }
     }
 
 
@@ -264,9 +273,6 @@ a:visited {
         .icon-facebook2 {
           &.active {
             color: @navBG;
-            background: #fff;
-            width: 65px;
-            border-radius: 15px;
           }
         }
         .icon-wand {
