@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>fb photo finder</title>
+    <title>{{ title.title }}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 
     <script id="mobile-sidebar-template-1" type="text/template">
       <div class="nav vertical">
-        <a href="#About" alt="About This">
+        <a href="/" alt="About This">
           <div class="nav-button">
             <div class= "icon icon-home"></div>
             <div class="text">About This</div>
@@ -33,15 +34,42 @@
       <div id="mobile-over" class="shown">
         <div id="mobile-header" class="shown">
           <div class="nav-toggle">
-            <div class="icon icon-menu"></div>
+            <div class="{{ title.icon }}"></div>
           </div>
-          <h1>fb photo finder</h1>
+          <h1>{{ title.title }}</h1>
         </div>
-        <div id="mobile-footer" class="">
-          <div id="status"></div>
-          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-          </fb:login-button>
-          <button class='fb-login'>Logout</button>
+
+        <div class="container">
+          
+          <div class="col-sm-12 title text-center">
+            <h1>
+              {{ fb.title }}
+            </h1>
+            <h3>
+              {{ fb.text }}
+            </h3>
+            <div class="buttons">
+              {{ #fb.buttons }}
+                <button class="btn btn-info {{ attribute }}">{{ text }}</button>
+              {{ /fb.buttons }}
+            </div>
+          </div>
+
+          <div class="row" id="main-images"></div>        
+
+        </div>
+
+        <div id="mobile-footer" class="shown">
+          <i class="{{ fb.start }}"></i>
+          <div id="fb-loading" class='container text-center'>
+            {{#fb.flows}}
+              <div class="col-sm-4 flow">
+                <h2> {{ text }} </h2>
+                <br />
+                <i class="{{ icon }}"></i>
+              </div>
+            {{/fb.flows}}
+          </div>
         </div>
       </div>
 
@@ -52,7 +80,6 @@
     <script src="/javascripts/libs/jquery-min.1.11.1.js"></script>
     <script src="/javascripts/libs/underscore-1.6.0.js"></script>
     <script src="/javascripts/libs/backbone-1.1.2.js"></script>
-    <script src="/javascripts/main.js"></script>
     <script src="/javascripts/routers/router.js"></script>
     <script src="/javascripts/views/facebook.js"></script>
     <script src="/javascripts/models/user.js"></script>
@@ -63,5 +90,6 @@
     <script src="/javascripts/views/home-content.js"></script>
     <script src="/javascripts/views/main-images.js"></script>
     <script src="/javascripts/views/single-image.js"></script>
+    <script src="/javascripts/main.js"></script>
   </body>
 </html>
