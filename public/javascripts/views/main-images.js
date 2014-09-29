@@ -8,7 +8,7 @@ var APP = window.APP || {};
 
 		initialize: function(config) {
 			this.template = APP.templates.images;
-			this.listen();
+			this.listen().setDisabled();
 
 			return this;
 		},
@@ -16,73 +16,42 @@ var APP = window.APP || {};
 		listen: function() {
 			
 			this.model.on('change:photos change:sortBy', function(model, inUse) {
+
 				if (inUse) { 
-					this.sortPhotos(inUse).renderPhotos( this.createPhotoObjects() );
+					if (!model.changed.hasOwnProperty('sortBy')) {
+						this.sortPhotos(inUse).renderPhotos( this.createPhotoObjects() );						
+					} else if (model.changed.hasOwnProperty('sortBy')) { 
+						this.sortPhotos().renderPhotos( this.createPhotoObjects() ).setDisabled(); 
+					}
 				}
-				else { console.log(model.attributes);	}
 
 			}.bind(this));
 
-			this.$el.on('click touchStart', function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-
-				this.model.set('sortBy', $(e.target).attr('data-sort'));
-			}.bind(this));
-
-			this.$el.on('click touchStart', 'a', function(e) {
-				// do nothing;
-			})
-
-			return this;
-		},
-
-		renderTemplate: function() {
-			this.view = this.template.render(this.pictures);
-
-			return this;
-		},
-
-		showPictures: function() {
-
-			this.$el.html(this.view)
-					.removeClass('hidden')
-					.addClass('shown');
+			this.$el.on('click touchStart', 'button', function(e) {
 			
-			return this;
-		},
+				this.model.set('sortBy', $(e.target).attr('data-sort'));					
 
-		hidePictures: function() {
-
-			this.$el.removeClass('shown')
-					.addClass('hidden');
+			}.bind(this));
 
 			return this;
 		},
-
 
 		sortPhotos: function(photos) {
-		  var by = this.model.get('sortBy'),
-		  		resorting = false;
-		 
-		  if (typeof photos === 'string') {
+		  var by = this.model.get('sortBy') || 'likes';
+
+		  if (typeof photos === 'undefined') {
 		  	photos = this.model.get('photos');
-		  	resorting = true;
 		  }
 
 		  photos = photos.sort(function(a,b) {
 
-		    a[by] = a[by] || {};
-		    a[by].data = a[by].data || [];
+		    a[by] 			= a[by] 		 || {};
+		    a[by].data 	= a[by].data || [];
+		    b[by] 			= b[by] 		 || {};
+		    b[by].data 	= b[by].data || [];
 
-		    b[by] = b[by] || {};
-		    b[by].data = b[by].data || [];
-		    if (resorting) {
-		    	return a[by].length < b[by].length;
-		    } else {
-		    	return a[by].data.length < b[by].data.length;		    	
-		    }
-
+		    return b[by].data.length - a[by].data.length;
+			  
 		  });
 
 		  this.model.set( 'photos', photos );
@@ -132,8 +101,19 @@ var APP = window.APP || {};
 		renderPhotos: function(data) {
 
 		  $('#image-container').html(this.template.render(data));
+		  this.model.set('rendered', true);
 
 		  return this;
 		},
+
+		setDisabled: function() {
+
+			var which = this.model.get('sortBy');
+
+			$('.buttons button:not(.' + which + ')').removeClass('disabled');
+			$('.buttons button.' + which).addClass('disabled');
+
+			return this;
+		}
 	})
 })();

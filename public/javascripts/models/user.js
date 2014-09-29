@@ -37,7 +37,6 @@ var APP = window.APP || {};
       if (FB) {
         FB.api('/' + this.model.get('id') + '/photos/uploaded', function(photos) {
           if (photos.data.length > 0) {
-            console.log('got photos');
             this.model.set('photos', photos.data);
             APP.fbState.set('photos', photos.data);            
           } else {

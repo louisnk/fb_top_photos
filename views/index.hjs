@@ -50,12 +50,12 @@
               {{ fb.text }}
             </h3>
             <div class="buttons">
-              <button class="btn" data-sort="likes">
+              <button class="btn likes" data-sort="likes">
                 <i class="icomoon icon-thumbs-up"></i>
-                Like
+                Likes
               </button>
               <h3>or</h3>
-              <button class="btn" data-sort="comments">
+              <button class="btn comments" data-sort="comments">
                 <i class="icomoon icon-bubbles"></i>
                 Comments
               </button>
