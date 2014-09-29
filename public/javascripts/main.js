@@ -14,6 +14,7 @@ var APP = window.APP || {};
     fbState: new Backbone.Model({
       photos: false,
       created: false,
+      sortBy: 'likes',
       loggedIn: false,
       infoPulled: false,
       photosPulled: false,
@@ -34,7 +35,7 @@ var APP = window.APP || {};
       this.activeViews = {
         facebook: new Views.Facebook(fbConfig('#fb-loading')),
         nav: new Views.NavSidebar(viewConfig('#nav-container')),
-        mainImages: new Views.MainImages(viewConfig('#main-images')),
+        mainImages: new Views.MainImages(fbConfig('#main-images')),
         mainFooter: new Views.MainFooter(viewConfig('#mobile-footer')),
         mainHeader: new Views.MainHeader(viewConfig('#mobile-header')),
         mainContent: new Views.MainContent(viewConfig('#main-content'))
@@ -59,10 +60,7 @@ var APP = window.APP || {};
       $('body').on('click touchstart', 'a[href^="/"]', function(e) {
         e.preventDefault();
 
-        this.mainRouter.navigate(
-          $(e.target).parents('a').attr('href'), {
-           trigger: true 
-         });
+        // do nothing, there's no navigation
       }.bind(this));
       return this;
     }

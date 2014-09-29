@@ -1,12 +1,33 @@
-<div class="container" id="img-scroll">
-	<h3>Images for the taking</h3>
-	<ul>
-		{{#images}}
-			<li>
-        <a href="/photos/{{set}}/{{id}}">
-          <img src="{{src}}" alt="{{description}}">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>
+        {{images.one.num}}
+      </h1>
+      <a href="{{images.one.url}}">
+        <img src="{{images.one.src}}" alt="{{images.one.alt}}" 
+             class="img-responsive fb-img">        
+      </a>
+    </div>
+    {{#images.sec}}
+      <div class="col-sm-6 block">
+        <h2>
+          {{num}}
+        </h2>
+        <a href="{{url}}">
+          <img src="{{src}}" alt="{{alt}}" class="img-responsive fb-img">
         </a>
-      </li>
-		{{/images}}
-	</ul>
+      </div>
+    {{/images.sec}}
+  </div>
+  <div class="row minis">
+    {{#images.rest}}
+    <div class="col-md-4 block">
+      <h4>{{num}}</h4>
+      <a href="{{url}}">
+        <img src="{{src}}" alt="{{alt}}" class='img-responsive thumbnail fb-img'>
+      </a>
+    </div>
+    {{/images.rest}}
+  </div>
 </div>

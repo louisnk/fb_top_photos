@@ -7,8 +7,7 @@ var APP = window.APP || {};
 		url: '/getImages',
 
 		initialize: function(config) {
-			// this.template = APP.templates.images,
-
+			this.template = APP.templates.images;
 			this.listen();
 
 			return this;
@@ -16,39 +15,24 @@ var APP = window.APP || {};
 
 		listen: function() {
 			
-			this.model.on('change:imagesOpen', function(model, inUse) {
+			this.model.on('change:photos change:sortBy', function(model, inUse) {
 				if (inUse) { 
-					this.fetchPictures(this.model.get('imageSetToShow'))
-							.model.set('imagesLoaded', false);
+					this.sortPhotos(inUse).renderPhotos( this.createPhotoObjects() );
 				}
-				else { this.hidePictures();	}
+				else { console.log(model.attributes);	}
+
 			}.bind(this));
 
-			this.model.on('change:imageSetToShow', function(model, whichSet) {
-				if (this.model.get( 'imagesOpen' )) {
-					this.fetchPictures(whichSet).model.set('imagesLoaded', false);
-				} else { this.hidePictures(); } 
+			this.$el.on('click touchStart', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				this.model.set('sortBy', $(e.target).attr('data-sort'));
 			}.bind(this));
 
-			this.model.on('change:imagesLoaded', function(model, loaded) {
-				if (loaded) { this.renderTemplate().showPictures(); }
-				else this.hidePictures();
-			}.bind(this));
-
-			return this;
-		},
-
-		orderPhotos: function(photos) {
-			console.log(photos);
-			console.log(APP.user.get('photos'));
-			// photos = photos.order(function(a,b) {
-
-			// })
-		},
-
-		fetchPictures: function(whichSet) {
-			
-			// TODO: get pics from FB
+			this.$el.on('click touchStart', 'a', function(e) {
+				// do nothing;
+			})
 
 			return this;
 		},
@@ -74,7 +58,82 @@ var APP = window.APP || {};
 					.addClass('hidden');
 
 			return this;
-		}
+		},
 
+
+		sortPhotos: function(photos) {
+		  var by = this.model.get('sortBy'),
+		  		resorting = false;
+		 
+		  if (typeof photos === 'string') {
+		  	photos = this.model.get('photos');
+		  	resorting = true;
+		  }
+
+		  photos = photos.sort(function(a,b) {
+
+		    a[by] = a[by] || {};
+		    a[by].data = a[by].data || [];
+
+		    b[by] = b[by] || {};
+		    b[by].data = b[by].data || [];
+		    if (resorting) {
+		    	return a[by].length < b[by].length;
+		    } else {
+		    	return a[by].data.length < b[by].data.length;		    	
+		    }
+
+		  });
+
+		  this.model.set( 'photos', photos );
+
+		  return this;
+		},
+
+		createPhotoObjects: function() {
+
+			function imgObject( photo , i ) {
+
+				this.src = (i < 3) ? 
+									 photo.images[4].source : 
+									 photo.images[photo.images.length -1].source;
+
+				this.alt = photo.name || "A photo from Facebook";
+				this.num = i + 1;
+				this.url = photo.link;
+				this.ymd = photo.created_time;
+				this.tag = photo.tags;
+			}
+
+			var toRender = { 
+				images: {
+					one: {},
+					sec: [],
+					rest: []
+				} 
+			};
+
+			_.each(this.model.get( 'photos' ), function( photo, i ) {
+				if (Object.keys(toRender.images.one).length < 1) {
+					toRender.images.one = new imgObject( photo, i );
+				} else if (Object.keys(toRender.images.sec).length <= 1) {
+					toRender.images.sec.push(new imgObject( photo, i ));
+				} else {
+					toRender.images.rest.push(new imgObject( photo, i));
+				}
+
+			});
+
+			this.model.set('structured', true);
+
+			return toRender;
+		},
+
+		renderPhotos: function(data) {
+
+		  $('#image-container').html(this.template.render(data));
+
+		  return this;
+		},
 	})
 })();

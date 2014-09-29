@@ -10,7 +10,7 @@ var APP = window.APP || {};
       auth:   0,
       last_name:   "Smith",
       first_name:  "John",
-      sortBy: "comments"
+      sortBy: "likes"
     }
   });
 
@@ -24,15 +24,15 @@ var APP = window.APP || {};
     model: APP.User,
 
     listen: function() {
+
       APP.fbState.on('change:created', function(model, inUse) {
-        if (inUse && this.length > 0) {
+        if (inUse && this.length > 0 ) {
           this.getPhotos();
         } 
       }.bind(this));
 
       this.model.on('change:photos', function(model, inUse) {
-        console.log(model);
-        if (inUse.length > 0) { this.sortPhotos(inUse); }
+        if (inUse.length > 0) { APP.fbState.set('photos', inUse); }
         else console.log(inUse);
 
       }.bind(this));
@@ -49,35 +49,9 @@ var APP = window.APP || {};
             // TODO: tell them they have no photos
           }
         }.bind(this));
+        // this.model.set('photos', [ { likes: [1,2] }, {likes: [2,3,4] }, { likes: [1] } ])
       }
-    },
-
-    sortPhotos: function(photos) {
-      var by = this.model.get('sortBy');
-
-      photos = photos.sort(function(a,b) {
-
-        a[by] = a[by] || {};
-        a[by].data = a[by].data || [];
-
-        b[by] = b[by] || {};
-        b[by].data = b[by].data || [];
-        
-        return a[by].data.length < b[by].data.length;
-      });
-
-      this.photos = photos;
-
-      return this;
-    },
-
-    renderPhotos: function() {
-      console.log(this.photos);
-
-
-
-      return this;
-    },
+    }
 
 
   })

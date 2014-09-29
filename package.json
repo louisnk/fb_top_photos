@@ -22,6 +22,8 @@
   "dependencies": {
     "express": "3.5.0",
     "hjs": "*",
+    "recursive-readdir": "*",
+    "lodash": "*",
     "less-middleware": "*"
   }
 }

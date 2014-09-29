@@ -102,7 +102,7 @@ var APP = window.APP || {};
 
     askForLogin: function(callback) {
       APP.navState.set('footerTakeover', true);
-      $('.icon-facebook').addClass('active');
+      $('.icon-facebook').addClass('requested');
 
       return this;
     },

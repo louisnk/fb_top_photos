@@ -5,12 +5,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 
+
     <script id="mobile-sidebar-template-1" type="text/template">
       <div class="nav vertical">
-        <a href="/" alt="About This">
+        <a href="/" alt="Rankings">
           <div class="nav-button">
-            <div class= "icon icon-home"></div>
-            <div class="text">About This</div>
+            <div class= "icon icon-numbered-list"></div>
+            <div class="text">Rankings</div>
           </div>
         </a>
        
@@ -39,7 +40,7 @@
           <h1>{{ title.title }}</h1>
         </div>
 
-        <div class="container">
+        <div class="container" id="main-images">
           
           <div class="col-sm-12 title text-center">
             <h1>
@@ -49,13 +50,19 @@
               {{ fb.text }}
             </h3>
             <div class="buttons">
-              {{ #fb.buttons }}
-                <button class="btn btn-info {{ attribute }}">{{ text }}</button>
-              {{ /fb.buttons }}
+              <button class="btn" data-sort="likes">
+                <i class="icomoon icon-thumbs-up"></i>
+                Like
+              </button>
+              <h3>or</h3>
+              <button class="btn" data-sort="comments">
+                <i class="icomoon icon-bubbles"></i>
+                Comments
+              </button>
             </div>
           </div>
 
-          <div class="row" id="main-images"></div>        
+          <div class="row" id="image-container"></div>        
 
         </div>
 
@@ -80,7 +87,7 @@
     <script src="/javascripts/libs/jquery-min.1.11.1.js"></script>
     <script src="/javascripts/libs/underscore-1.6.0.js"></script>
     <script src="/javascripts/libs/backbone-1.1.2.js"></script>
-    <script src="/javascripts/routers/router.js"></script>
+    <script src="//twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
     <script src="/javascripts/views/facebook.js"></script>
     <script src="/javascripts/models/user.js"></script>
     <script src="/javascripts/views/nav-sidebar.js"></script>
@@ -91,5 +98,6 @@
     <script src="/javascripts/views/main-images.js"></script>
     <script src="/javascripts/views/single-image.js"></script>
     <script src="/javascripts/main.js"></script>
+    <script src="/templates.js"></script>
   </body>
 </html>

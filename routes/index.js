@@ -11,23 +11,19 @@ exports.index = function(req, res){
       },
       fb: {
         title: 'Facebook Top Photo Rankings',
-        text: 'Please log into facebook to see the ranking of your 25 most recent photos uploaded.',
+        text: 'Please log into facebook to see the ranking of your 25 most recently uploaded photos by:',
         start: 'icomoon icon-lab',
-        buttons: [
-          { text: "Like", attribute: "like" },
-          { text: "Comment", attribute: "comment" }
-        ],
         flows: [
           { text: "Log in with Facebook", 
-            icon: 'icomoon icon-facebook'
+            icon: 'icomoon icon-facebook2 active'
           },
           {
             text: "Wait for the magic",
-            icon: 'icomoon icon-lightning'
+            icon: 'icomoon icon-wand'
           },
           {
             text: "Profit",
-            icon: 'icomoon icon-user2'
+            icon: 'icomoon icon-user'
           }
         ]
       }

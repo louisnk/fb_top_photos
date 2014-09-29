@@ -28,7 +28,7 @@ exports.serve = function(req, res) {
 
 	this.compileTemplates = function(callback) {
 		var dir = path.join(__dirname, '..', 'views', 'templates');
-		this.hogan_compiler = require('../node/hogan_compiler');
+		this.hogan_compiler = require('../lib/hogan_compiler');
 
 		reader(dir, function(err, list) {
 			if (!err) {

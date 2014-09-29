@@ -26,6 +26,32 @@ var APP = window.APP || {};
       } else {
         this.hide();
       }
+
+      APP.fbState.on('change:loggedIn change:structured change:infoPulled change:rendered', 
+        function(model, inUse) {
+          this.checkState(model);
+      }.bind(this));
+    },
+
+    checkState: function(model) {
+      var stages = {
+        'loggedIn': 'facebook',
+        'infoPulled': 'wand',
+        'structured': 'wand',
+        'rendered': 'user'
+      }
+
+      _.each(model.changed, function(colored, stage) {
+        var active = stages[stage];
+        console.log(active);
+        console.log(colored);
+        console.log(stage);
+
+        if (colored) { $('.icon-' + active).addClass('active'); }
+        else { $('.icon-' + active).removeClass('active'); }
+      });
+
+      return this;
     },
 
     toggleTakeover: function() {

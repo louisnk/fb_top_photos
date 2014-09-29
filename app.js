@@ -3,12 +3,20 @@
  * Module dependencies.
  */
 
+var http = require('http');
+var utils = require('./lib/utils');
 var express = require('express');
 var routes = require('./routes');
-var http = require('http');
-var path = require('path');
+var reader = require('recursive-readdir');
+var template = require('./routes/template');
 
 var app = express();
+
+path = require('path');
+fs = require('fs');
+hogan = require('hjs');
+s = (process.platform === 'win32') ? '\\' : '/';
+_ = require('lodash');
 
 // all environments
 app.set('port', process.env.PORT || 9000);
@@ -38,6 +46,7 @@ app.get('/', routes.index);
 app.get('/fbID', function(req, res) {
   sendJSON(res, JSON.stringify({ id: 280198648674835 }));
 });
+app.get('/templates.js', template.serve);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
