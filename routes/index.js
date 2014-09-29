@@ -14,7 +14,7 @@ exports.index = function(req, res){
         text: 'Please log in with facebook to see the ranking of your 25 most recently uploaded photos by:',
         start: 'icon icon-menu',
         flows: [
-          { text: "Log in with Facebook", 
+          { text: "Log in", 
             icon: 'icomoon icon-facebook2 active'
           },
           {
