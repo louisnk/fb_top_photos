@@ -26,7 +26,7 @@ var APP = window.APP || {};
       }.bind(this));
 
 
-      this.$el.on('click touchStart', 'i', function(e) {
+      this.$el.on('click touchStart', '.flow', function(e) {
         e.stopPropagation();
 
         if (!this.model.get('loggedIn')) {
@@ -39,6 +39,13 @@ var APP = window.APP || {};
             }
           }.bind(this));;
         }
+      }.bind(this));
+
+      $('body').on('click touchStart', '.logout', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.logOut();
       }.bind(this));
 
       return this;
@@ -70,9 +77,10 @@ var APP = window.APP || {};
 
       this.checkLogin(function(loggedIn) {
         if (loggedIn) {
-          
           this.login = loggedIn;
           this.model.set('loggedIn', true);
+
+          this.toggleRequest();
 
         } else {
           this.askForLogin();
@@ -100,7 +108,20 @@ var APP = window.APP || {};
 
     askForLogin: function(callback) {
       APP.navState.set('footerTakeover', true);
-      $('.icon-facebook').addClass('requested');
+      this.toggleRequest();
+
+      return this;
+    },
+
+    toggleRequest: function() {
+
+      var $flow = $('.flow:first-child');
+
+      if (!this.model.get('loggedIn')) {
+        $flow.addClass('requested');
+      } else {
+        $flow.removeClass('requested');
+      }
 
       return this;
     },
@@ -129,7 +150,6 @@ var APP = window.APP || {};
         this.model.set('infoPulled', true);
 
       }.bind(this)); 
-
     },
 
     setUser: function() {
@@ -143,9 +163,31 @@ var APP = window.APP || {};
       else { this.model.set('created', false); }
 
       return this;
+    },
 
+    logOut: function() {
+      if (FB) {
+        FB.logout(function(done) {
+          if (done && !done.error) {
+            this.resetModel();
+          }
+        }.bind(this));
+      }
+
+      return this;
+    },
+
+    resetModel: function() {
+      _.each(this.model.attributes, function(open, attrib) {
+        console.log(attrib);
+        console.log(open);
+        if (attrib !== 'sortBy' && open) {
+          this.model.set(attrib, false);
+        }
+      }.bind(this));
+
+      return this;
     }
-
 
   });
 })();

@@ -38,6 +38,10 @@
             <div class="{{ title.icon }}"></div>
           </div>
           <h1>{{ title.title }}</h1>
+          <div class="logout">
+            <div class="icon icon-eye-blocked"></div>
+          </div>
+          <h1 class='pull-right logout'>log out</h1>
         </div>
 
         <div class="container" id="main-images">
@@ -51,12 +55,12 @@
             </h3>
             <div class="buttons">
               <button class="btn likes" data-sort="likes">
-                <i class="icomoon icon-thumbs-up"></i>
+                <i class="icon icon-thumbs-up"></i>
                 Likes
               </button>
               <h3>or</h3>
               <button class="btn comments" data-sort="comments">
-                <i class="icomoon icon-bubbles"></i>
+                <i class="icon icon-bubbles"></i>
                 Comments
               </button>
             </div>
@@ -73,7 +77,7 @@
               <div class="col-sm-4 flow">
                 <h2> {{ text }} </h2>
                 <br />
-                <i class="{{ icon }}"></i>
+                <div class="icon {{ icon }}"></div>
               </div>
             {{/fb.flows}}
           </div>

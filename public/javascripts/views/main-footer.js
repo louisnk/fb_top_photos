@@ -31,6 +31,7 @@ var APP = window.APP || {};
         function(model, inUse) {
           this.checkState(model);
       }.bind(this));
+
     },
 
     checkState: function(model) {

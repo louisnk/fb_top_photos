@@ -33,6 +33,18 @@ var APP = window.APP || {};
 
 			}.bind(this));
 
+			this.model.on('change:loggedIn', function(model, inUse) {
+				if (!inUse) {
+					this.clearPhotos();
+				}
+			}.bind(this));
+
+			return this;
+		},
+
+		clearPhotos: function() {
+			$('#image-container').empty();
+			$('button').removeClass('disabled');
 			return this;
 		},
 
