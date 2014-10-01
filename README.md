@@ -9,7 +9,7 @@ Once that's done, create an app in the facebook developer section (https://devel
 
 On line 69 of facebook.js you'll also need to enter your own API key for the appId.
 
-That's pretty much it.
+That's pretty much it. Enjoy!
 
 
 ###To make it work: 
