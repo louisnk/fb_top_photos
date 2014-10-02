@@ -33,7 +33,6 @@ var APP = window.APP || {};
 
 
       this.activeViews = {
-        facebook: new Views.Facebook(fbConfig('#fb-loading')),
         nav: new Views.NavSidebar(viewConfig('#nav-container')),
         mainImages: new Views.MainImages(fbConfig('#main-images')),
         mainFooter: new Views.MainFooter(viewConfig('#mobile-footer')),
@@ -42,6 +41,8 @@ var APP = window.APP || {};
 
 
      this.bindNavAction().stopLocalLinks();
+
+     this.FacebookManager.init();
       
       // this.navState.set('footerAvailable', false);
     },

@@ -31,6 +31,17 @@ var APP = window.APP || {};
           this.checkState(model);
       }.bind(this));
 
+      this.$el.on('click touchStart', '.flow', function(e) {
+        e.stopPropagation();
+
+        if (!this.model.get('loggedIn')) {
+
+          APP.FacebookManager.handleLogin(true);
+          
+        }
+      }.bind(this));
+
+
     },
 
     checkState: function(model) {

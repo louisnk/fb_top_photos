@@ -1,11 +1,10 @@
 var APP = window.APP || {};
 
 (function() {
-  APP.Views = APP.Views || {};
-  APP.Views.Facebook = Backbone.View.extend({
+  APP.FacebookManager = {
 
-    initialize: function(config) {
-      this.model = config.model;
+    init: function() {
+      this.model = APP.fbState;
 
       this.listen().connectToFB(function() { 
         this.handleLogin();
@@ -21,25 +20,11 @@ var APP = window.APP || {};
         }
       }.bind(this));
 
+
       this.model.on('change:infoPulled', function(model, pulled) {
         if (pulled) { this.setUser(); }
       }.bind(this));
 
-
-      this.$el.on('click touchStart', '.flow', function(e) {
-        e.stopPropagation();
-
-        if (!this.model.get('loggedIn')) {
-
-          this.tryLogin(function(response) {
-            if (response.status === 'connected') {
-              this.handleLogin();              
-            } else {
-              // they must not want to be logged in?
-            }
-          }.bind(this));;
-        }
-      }.bind(this));
 
       $('body').on('click touchStart', '.logout', function(e) {
         e.preventDefault();
@@ -73,7 +58,17 @@ var APP = window.APP || {};
       }      
     },
 
-    handleLogin: function() {
+    handleLogin: function(triggered) {
+
+      if (triggered) {
+        this.tryLogin(function(response) {
+          if (response.status === 'connected') {
+            this.handleLogin();              
+          } else {
+            // they must not want to be logged in?
+          }
+        }.bind(this));;
+      }
 
       this.checkLogin(function(loggedIn) {
         if (loggedIn) {
@@ -189,5 +184,7 @@ var APP = window.APP || {};
       return this;
     }
 
-  });
+  };
+
+
 })();
