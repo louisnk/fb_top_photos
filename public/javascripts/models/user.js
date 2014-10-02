@@ -15,9 +15,9 @@ var APP = window.APP || {};
   });
 
   APP.Users = Backbone.Collection.extend({
-    initialize: function(user) {
+    initialize: function() {
 
-      this.model = user;
+      
       this.listen();
     },
     
